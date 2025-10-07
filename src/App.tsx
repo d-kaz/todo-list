@@ -5,19 +5,16 @@ import TodoList from './components/TodoList';
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>(() => {
-    // Загрузка из localStorage при инициализации
     const saved = localStorage.getItem('todos');
     return saved ? JSON.parse(saved) : [];
   });
   
   const [filter, setFilter] = useState<FilterType>('all');
 
-  // Сохранение в localStorage при изменении todos
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  // Фильтрация задач
   const filteredTodos = todos.filter(todo => {
     switch (filter) {
       case 'active':
@@ -29,10 +26,8 @@ function App() {
     }
   });
 
-  // Подсчёт активных задач
   const activeTodosCount = todos.filter(todo => !todo.completed).length;
 
-  // Обработчики
   const addTodo = (text: string) => {
     const newTodo: Todo = {
       id: Date.now().toString(),
